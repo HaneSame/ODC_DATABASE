@@ -1,0 +1,27 @@
+name: Scan CVEs with Vulnz
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Vulnz CLI
+        run: |
+          curl -LO https://github.com/jeremylong/open-vulnerability-cli/releases/latest/download/open-vulnerability-cli-linux.tar.gz
+          tar -xzf open-vulnerability-cli-linux.tar.gz
+          mv open-vulnerability-cli /usr/local/bin/
+
+      - name: Run CVE Scan
+        run: vulnz cve --cache --directory ./cache
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: vulnerability-results
+          path: ./cache
