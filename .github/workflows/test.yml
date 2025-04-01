@@ -13,8 +13,7 @@ jobs:
 
       - name: Install Vulnz CLI
         run: |
-          curl -LO https://github.com/jeremylong/open-vulnerability-cli/releases/latest/download/open-vulnerability-cli-linux.tar.gz
-          tar -xzf open-vulnerability-cli-linux.tar.gz
+          curl -LO https://github.com/jeremylong/open-vulnerability-cli/archive/refs/tags/V8.1.0.tar.gz
           mv open-vulnerability-cli /usr/local/bin/
 
       - name: Run CVE Scan
