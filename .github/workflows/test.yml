@@ -13,7 +13,7 @@ jobs:
 
       - name: Install Vulnz CLI
         run: |
-          wget https://github.com/jeremylong/open-vulnerability-cli/archive/refs/tags/V8.1.0.tar.gz
+          curl -LO https://github.com/jeremylong/open-vulnerability-cli/archive/refs/tags/V8.1.0.tar.gz
           ls
           file V8.1.0.tar.gz
           tar -xzf V8.1.0.tar.gz
