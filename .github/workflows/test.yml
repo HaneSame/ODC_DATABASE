@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Start Vulnerability Data Mirror
         env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_KEY }}
         run: |
           pwd
           sudo mkdir /usr/local/odc
