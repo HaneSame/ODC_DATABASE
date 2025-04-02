@@ -1,27 +1,32 @@
-name: Retrieve Vulnerability Data Mirror
+name: Run OWASP Dependency Check and Retrieve H2 Database
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Exécute tous les jours à minuit UTC
-  workflow_dispatch: # Permet d'exécuter manuellement
+  workflow_dispatch: # Permet un lancement manuel
 
 jobs:
-  fetch_vulnerability_data:
+  dependency_check:
     runs-on: ubuntu-latest
-    env:
-      NVD_API_KEY: ${{ secrets.NVD_KEY }}
-    steps:
-      - name: Use secret environment variable
-        run: echo "The secret is: $NVD_API_KEY"
-      - name: Start Vulnerability Data Mirror
-        run: |
-          echo "$NVD_API_KEY"
-          sudo mkdir /usr/local/odc
-          wget https://github.com/jeremylong/open-vulnerability-cli/releases/download/v8.1.0/vulnz-8.1.0.jar
-          sudo java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/usr/local/odc
 
-      - name: Save Vulnerability Data
+    steps:
+      # Étape pour vérifier le code source
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Étape pour exécuter OWASP Dependency Check dans Docker
+      - name: Run OWASP Dependency Check
+        run: |
+          docker run --rm \
+          -v $(pwd):/src \
+          -v $(pwd)/data:/usr/share/dependency-check/data \
+          owasp/dependency-check \
+          --init \
+          --project "Dependency Check Report" \
+          --scan /src \
+          --format HTML
+
+      # Étape pour sauvegarder la base H2 et les rapports générés
+      - name: Upload H2 Database and Reports
         uses: actions/upload-artifact@v4
         with:
-          name: vulnerability-data
-          path: /usr/local/odc
+          name: dependency-check-data
+          path: ./data
