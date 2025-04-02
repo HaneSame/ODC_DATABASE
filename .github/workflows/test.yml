@@ -15,7 +15,7 @@ jobs:
         run: |
           pwd
           ls
-          
+          wget https://github.com/jeremylong/open-vulnerability-cli/releases/download/v8.1.0/vulnz-8.1.0.jar
           java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/usr/local/odc
 
       - name: Save Vulnerability Data
