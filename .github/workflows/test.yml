@@ -13,7 +13,9 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          mkdir /usr/local/odc
+          pwd
+          ls
+          
           java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/usr/local/odc
 
       - name: Save Vulnerability Data
