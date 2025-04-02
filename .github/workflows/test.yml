@@ -13,12 +13,11 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          mkdir /home/odc/
-          
-          java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/home/odc
+          mkdir /usr/local/odc
+          java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/usr/local/odc
 
       - name: Save Vulnerability Data
         uses: actions/upload-artifact@v4
         with:
           name: vulnerability-data
-          path: /usr/local/apache2/htdocs
+          path: /usr/local/odc
