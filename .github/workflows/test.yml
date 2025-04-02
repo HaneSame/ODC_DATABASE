@@ -15,14 +15,7 @@ jobs:
       # Étape pour exécuter OWASP Dependency Check dans Docker
       - name: Run OWASP Dependency Check
         run: |
-          docker run --rm \
-          -v $(pwd):/src \
-          -v $(pwd)/data:/usr/share/dependency-check/data \
-          owasp/dependency-check \
-          --init \
-          --project "Dependency Check Report" \
-          --scan /src \
-          --format HTML
+          docker run --network=host -v $(pwd)/data:/usr/share/dependency-check/data owasp/dependency-check --nvdApiKey 86d18a16-ad6c-4266-afe8-0b959c4fe930 --scan /src
 
       # Étape pour sauvegarder la base H2 et les rapports générés
       - name: Upload H2 Database and Reports
