@@ -13,7 +13,7 @@ jobs:
         env:
           NVD_API_KEY: ${{ secrets.NVD_KEY }}
         run: |
-          pwd
+          echo "$NVD_API_KEY"
           sudo mkdir /usr/local/odc
           wget https://github.com/jeremylong/open-vulnerability-cli/releases/download/v8.1.0/vulnz-8.1.0.jar
           sudo java -jar vulnz-8.1.0.jar cve --apikey=$NVD_API_KEY --cache --directory=/usr/local/odc
