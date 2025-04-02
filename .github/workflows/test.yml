@@ -8,10 +8,12 @@ on:
 jobs:
   fetch_vulnerability_data:
     runs-on: ubuntu-latest
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_KEY }}
     steps:
+      - name: Use secret environment variable
+        run: echo "The secret is: $NVD_API_KEY"
       - name: Start Vulnerability Data Mirror
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_KEY }}
         run: |
           echo "$NVD_API_KEY"
           sudo mkdir /usr/local/odc
